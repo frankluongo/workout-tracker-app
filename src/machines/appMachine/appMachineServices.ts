@@ -1,6 +1,6 @@
 export async function fetchExercises() {
   try {
-    const res = await fetch('/api/exercises');
+    const res = await fetch('/api/v1/exercises');
     return await res.json();
   } catch(e) {
     console.error(e);
