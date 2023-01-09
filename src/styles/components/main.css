@@ -1,0 +1,11 @@
+main {
+  --padding: 16px;
+
+  padding: var(--padding);
+}
+
+@media (min-width: 900px) {
+  main {
+    --padding: 32px;
+  }
+}

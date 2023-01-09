@@ -1,0 +1,35 @@
+.header {
+  height: 100vh;
+
+  border-right: 1px solid #eee;
+}
+
+.menu {
+  display: flex;
+  width: 100%;
+
+  border-top: 1px solid #eee;
+}
+
+.menu-link {
+  padding: 32px;
+
+  font-size: 16px;
+  text-align: left;
+
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out;
+}
+
+.menu-link[aria-current="true"] {
+  background-color: #f8f8f8;
+}
+
+@media (min-width: 900px) {
+  .menu {
+    flex-direction: column;
+  }
+}
