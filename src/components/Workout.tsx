@@ -1,6 +1,6 @@
 import React from "react";
-import { useAppMachine } from "../hooks/useAppMachine";
-import { useInputs } from "../hooks/useInputs";
+import { useAppMachine } from "#hooks/useAppMachine";
+import { useInputs } from "#hooks/useInputs";
 
 export const Workout = () => {
   const { send, state } = useAppMachine();

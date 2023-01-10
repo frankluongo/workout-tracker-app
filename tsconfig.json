@@ -13,8 +13,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "./src",
+    "paths": {
+      "#components/*": ["components/*"],
+      "#common/*": ["common/*"],
+      "#helpers/*": ["helpers/*"],
+      "#hooks/*": ["hooks/*"],
+      "#lib/*": ["lib/*"],
+      "#machines/*": ["machines/*"],
+      "#models/*": ["models/*"],
+      "#pages/*": ["pages/*"],
+      "#styles/*": ["styles/*"],
+      "#views/*": ["views/*"],
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/machines/XStateProvider.js"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

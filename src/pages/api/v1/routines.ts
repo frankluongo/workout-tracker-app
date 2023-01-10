@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { validateExercise } from '../../../helpers/validateExercise';
-import { dbConnect } from "../../../lib/dbConnect";
-import Exercise from "../../../models/Exercise";
+import { validateExercise } from '#helpers/validateExercise';
+import { dbConnect } from "#lib/dbConnect";
+import Routine from "#models/Routine";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   await dbConnect();
@@ -10,16 +10,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     case 'DELETE': 
       try {
         const data = JSON.parse(req.body);
-        const exercises = await Exercise.findByIdAndUpdate(data.id, { archived: true });
-        return res.status(200).json({ type: 'success', payload: exercises });
+        const routine = await Routine.findByIdAndUpdate(data.id, { archived: true });
+        return res.status(200).json({ type: 'success', payload: routine });
       } catch(e) {
         console.error(e);
       }
     break;
     case 'GET': 
       try {
-        const exercises = await Exercise.find({});
-        return res.status(200).json({ type: 'success', payload: exercises });
+        const routine = await Routine.find({});
+        return res.status(200).json({ type: 'success', payload: routine });
       } catch(e) {
         console.error(e);
       }
@@ -27,8 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     case 'PATCH': {
       const data = validateExercise(JSON.parse(req.body));
       try {
-        const exercises = await Exercise.findByIdAndUpdate(data._id, data);
-        return res.status(200).json({ type: 'success', payload: exercises });
+        const routine = await Routine.findByIdAndUpdate(data._id, data);
+        return res.status(200).json({ type: 'success', payload: routine });
       } catch(e) {
         console.error(e);
       }
@@ -36,8 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     case 'POST': {
       const data = validateExercise(JSON.parse(req.body));
       try {
-        const exercises = await Exercise.create(data);
-        return res.status(200).json({ type: 'success', payload: exercises });
+        const routine = await Routine.create(data);
+        return res.status(200).json({ type: 'success', payload: routine });
       } catch(e) {
         console.error(e);
       }

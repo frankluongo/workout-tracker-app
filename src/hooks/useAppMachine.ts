@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { useActor } from '@xstate/react';
-import { XStateContext } from '../machines/XStateProvider';
+import { XStateContext } from '#machines/XStateProvider';
 
 export function useAppMachine() {
-  const { appMachineService } = useContext(XStateContext);
-  const [state, send]: [StateInterface, Function] = useActor(appMachineService);
+  const { appMachineService }: any = useContext(XStateContext);
+  const [state, send]: [any, any] = useActor(appMachineService);
   const currentState: string = state.toStrings()[0];
   return { currentState, state, send };
 }

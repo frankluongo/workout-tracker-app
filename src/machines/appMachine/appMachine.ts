@@ -1,75 +1,56 @@
 import { createMachine } from 'xstate';
 
-import { APP_STATE } from "./appMachineStates";
+import { APP_STATES } from "#common/constants";
 import * as actions from './appMachineActions';
 import * as services from "./appMachineServices";
 
 export const appMachine = createMachine({
   predictableActionArguments: true,
   id: 'appMachine',
-  initial: APP_STATE.default,
+  initial: APP_STATES.default,
   context: {
-    exercises: {},
+    exercises: [],
     user: {},
-    workout: {}
+    workout: {},
+    routines: []
   },
   states: {
-    [APP_STATE.default]: {
+    [APP_STATES.default]: {
       invoke: {
         src: 'fetchExercises',
         onDone: { actions: ['storeExercises'] }
       }
     },
-    [APP_STATE.exercises]: {
-      id: 'exercises',
-      initial: 'default',
-      states: {
-        default: {},
-        addingExercises: {
-          invoke: {
-            src: 'addExercise',
-            onDone: { actions: ['addToExerciseStore'], target: 'default' },
-          }
-        },
-        updatingExercises: {
-          invoke: {
-            src: 'updateExercise',
-            onDone: { actions: ['updateExerciseStore'], target: 'default' }
-          }
-        }
-      },
-      on: {
-        ADD_EXERCISE: { target: 'exercises.addingExercises' },
-        UPDATE_EXERCISE: { target: 'exercises.updatingExercises' }
-      }
-    },
-    [APP_STATE.routines]: {
-
-    },
-    [APP_STATE.settings]: {
-
-    },
-    [APP_STATE.stats]: {
-
-    },
-    [APP_STATE.workingOut]: {
-      on: {
-        ADD_SET: {
-          actions: ['addSet']
-        },
-        UPDATE_SET: {
-          actions: 'updateSet'
+    // Exercise States
+    addingExercise: {
+      invoke: {
+        src: 'addExercise',
+        onDone: { 
+          target: APP_STATES.default
         }
       }
-    }
+    },
+    deletingExercise: {
+      invoke: {
+        src: 'deleteExercise',
+        onDone: { 
+          target: APP_STATES.default
+        }
+      }
+    },
+    updatingExercise: {
+      invoke: {
+        src: 'updateExercise',
+        onDone: {
+          target: APP_STATES.default
+        }
+      }
+    },
   },
   on: {
-    TO_DEFAULT: { target: APP_STATE.default },
-    TO_EXERCISES: { target: APP_STATE.exercises },
-    TO_ROUTINES: { target: APP_STATE.routines },
-    TO_SETTINGS: { target: APP_STATE.settings },
-    TO_STATS: { target: APP_STATE.stats },
-    TO_WORKOUT: { target: APP_STATE.workingOut },
+    ADD_EXERCISE: { target: 'addingExercise' },
+    DELETE_EXERCISE: { target: 'deletingExercise' },
+    UPDATE_EXERCISE: { target: 'updatingExercise' },
   }
 }, {
   actions,

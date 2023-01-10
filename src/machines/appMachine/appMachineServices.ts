@@ -1,32 +1,18 @@
+import { API } from "#common/constants";
+import { appFetch } from "#lib/appFetch";
+
 export async function fetchExercises() {
-  try {
-    const res = await fetch('/api/v1/exercises');
-    return await res.json();
-  } catch(e) {
-    console.error(e);
-  }
+  return appFetch(API.exercises);
 }
 
 export async function addExercise(_: any, { data }: { data: object }) {
-  try {
-    const res = await fetch('/api/v1/exercises', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-    return await res.json();
-  } catch(e) {
-    console.error(e);
-  }
+  return appFetch(API.exercises, 'POST', data);
+}
+
+export async function deleteExercise(_: any, { id }: { id: string }) {
+  return appFetch(API.exercises, 'DELETE', { id })
 }
 
 export async function updateExercise(_: any, { data }: { data: object }) {
-  try {
-    const res = await fetch('/api/v1/exercises', {
-      method: 'PATCH',
-      body: JSON.stringify(data)
-    });
-    return await res.json();
-  } catch(e) {
-    console.error(e);
-  }
+  return appFetch(API.exercises, 'PATCH', data);
 }

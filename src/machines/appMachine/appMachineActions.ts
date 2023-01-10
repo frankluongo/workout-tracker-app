@@ -1,3 +1,4 @@
+import { convertToInt } from '#helpers/convertToInt';
 import { assign } from 'xstate';
 
 export const addSet = assign((ctx: any, { i }: { i: number }) => {
@@ -42,12 +43,7 @@ export const updateSet = assign((ctx: any, { newState, exerciseIndex, setIndex }
 });
 
 function countSets(sets: Sets[]): number {
-  return sets.reduce((acc: number, cur) => acc + turnIntoInt(cur.setCount), 0)
-}
-
-function turnIntoInt(val: string|number) {
-  if (typeof val === 'string') return 0;
-  return 1;
+  return sets.reduce((acc: number, cur) => acc + convertToInt(cur.setCount), 0)
 }
 
 interface Sets {

@@ -1,6 +1,8 @@
 import React from "react";
-import { useAppMachine } from "../hooks/useAppMachine";
-import { ExerciseSchemaInterface } from "../models/Exercise";
+import { useAppMachine } from "#hooks/useAppMachine";
+import { ExerciseSchemaInterface } from "#models/Exercise";
+import { EQUIPMENT, MUSCLE_GROUPS } from "#common/constants";
+import { validateExercise } from "#helpers/validateExercise";
 
 export const AddExercise = ({
   exercise,
@@ -70,11 +72,9 @@ export const AddExercise = ({
           id="equipment"
           defaultValue={exercise?.equipment || "Barbell"}
         >
-          <option>Barbell</option>
-          <option>Bodyweight</option>
-          <option>Cable Machine</option>
-          <option>Dumbbells</option>
-          <option>Plate-Loaded Machine</option>
+          {EQUIPMENT.map(({ label, slug }) => (
+            <option key={slug}>{label}</option>
+          ))}
         </select>
       </div>
       <div>
@@ -84,17 +84,9 @@ export const AddExercise = ({
           id="muscleGroup"
           defaultValue={exercise?.muscleGroup || "Biceps"}
         >
-          <option>Biceps</option>
-          <option>Calves</option>
-          <option>Chest</option>
-          <option>Core</option>
-          <option>Glutes</option>
-          <option>Hamstrings</option>
-          <option>Lower Back</option>
-          <option>Quads</option>
-          <option>Shoulders</option>
-          <option>Triceps</option>
-          <option>Upper Back</option>
+          {MUSCLE_GROUPS.map(({ label, slug }) => (
+            <option key={slug}>{label}</option>
+          ))}
         </select>
       </div>
       <div>
@@ -113,14 +105,13 @@ export const AddExercise = ({
 
   async function onSubmit(e: any) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const data: object = {};
+    const formData: any = new FormData(e.target);
+    const data: any = {};
     for (const [key, value] of formData.entries()) {
       data[key] = value;
     }
-    if (exercise) {
-      data._id = exercise._id;
-    }
+    if (exercise) data._id = exercise._id;
+    validateExercise(data);
     send({ type, data });
   }
 };

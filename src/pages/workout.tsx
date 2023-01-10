@@ -2,7 +2,7 @@ import React from "react";
 import { useAppMachine } from "../hooks/useAppMachine";
 import { useInputs } from "../hooks/useInputs";
 
-export const Workout = () => {
+export default function Workout() {
   const { send, state } = useAppMachine();
   const workout = state.context.workout;
 
@@ -16,7 +16,7 @@ export const Workout = () => {
       </form>
     </section>
   );
-};
+}
 
 function Exercise({
   ei,

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 
 export const Modal = ({ children, setShow, title }: ModalPropsInterface) => {
   const modalRef = useRef(null);
@@ -15,13 +15,13 @@ export const Modal = ({ children, setShow, title }: ModalPropsInterface) => {
       document.removeEventListener("keyup", onEscape);
     };
 
-    function onClickOutside(e: any) {
-      if (element.contains(e.target)) return;
+    function onClickOutside(ev: any): void | null {
+      if (element.contains(ev.target)) return;
       setShow(false);
     }
 
-    function onEscape(e: React.KeyboardEvent) {
-      if (e.key !== "Escape") return;
+    function onEscape(ev: any) {
+      if (ev.key !== "Escape") return;
       setShow(false);
     }
   }, [mounted, setShow]);
@@ -46,7 +46,19 @@ export const Modal = ({ children, setShow, title }: ModalPropsInterface) => {
 
 interface ModalPropsInterface {
   children: JSX.Element;
-  showModal: boolean;
   setShow: Function;
   title: string;
+}
+
+interface Element {
+  removeEventListener(
+    type: "keyup" | "keydown",
+    listener: (event: KeyboardEvent) => any,
+    options?: boolean | EventListenerOptions
+  ): void;
+  addEventListener(
+    type: "keyup" | "keydown",
+    listener: (event: KeyboardEvent) => any,
+    options?: boolean | EventListenerOptions
+  ): void;
 }
