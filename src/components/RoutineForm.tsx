@@ -4,6 +4,9 @@ import { FormField } from "./FormField";
 
 import { RoutineInterface } from "#models/Routine";
 import { getRoutineExerciseFields } from "#helpers/getRoutineExerciseFields";
+import { SuperFormData } from "#helpers/SuperFormData";
+import { appFetch } from "#lib/appFetch";
+import { API } from "#common/constants";
 
 export const RoutineForm = ({ exercises, routine }: RoutineFormProps) => {
   const fields = getRoutineFields(routine);
@@ -20,12 +23,19 @@ export const RoutineForm = ({ exercises, routine }: RoutineFormProps) => {
           return <FormField key={field.id} field={field} />;
         })}
         {exercisesArray.map((_, i) => (
-          <div key={i}>
-            {exerciseFields.map((field, i) => (
-              <FormField key={i} field={field} />
+          <fieldset key={i} name={`exercise-${i}`}>
+            <legend>Routine Exercise(s)</legend>
+            {exerciseFields.map((field, index) => (
+              <FormField key={index} field={field} subField={`exercise-${i}`} />
             ))}
-          </div>
+          </fieldset>
         ))}
+        <input
+          type="hidden"
+          name="exercisesLength"
+          id="exercisesLength"
+          value={exercisesLength}
+        />
         <button onClick={() => setExercises(exercisesLength + 1)} type="button">
           Add Exercise
         </button>
@@ -34,9 +44,15 @@ export const RoutineForm = ({ exercises, routine }: RoutineFormProps) => {
     </form>
   );
 
-  function onSubmit(e: any) {
+  async function onSubmit(e: any) {
     e.preventDefault();
-    console.log("submitting...");
+    const data = new SuperFormData(e.target).toJson();
+    try {
+      const res = await appFetch(API.routines, "POST", data);
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
   }
 };
 

@@ -1,14 +1,15 @@
-import { CreateRoutine } from "#components/CreateRoutine";
+import React from "react";
+
+import { RoutineCreate } from "#components/RoutineCreate";
 import { fetchExercises } from "#lib/exercises";
 import { fetchRoutines } from "#lib/routines";
-import React from "react";
 
 export default function Routine({ exercises, routines }: RoutinePageProps) {
   const exercisesArr = JSON.parse(exercises);
   return (
     <header>
       <h2 className="h2">Routines</h2>
-      <CreateRoutine exercises={exercisesArr} />
+      <RoutineCreate exercises={exercisesArr} />
     </header>
   );
 }
@@ -23,5 +24,5 @@ export async function getServerSideProps() {
 
 interface RoutinePageProps {
   routines: Array<object>;
-  exercises: Array<object>;
+  exercises: string;
 }

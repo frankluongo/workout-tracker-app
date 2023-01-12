@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       }
     }
     case 'POST': {
-      const data = validateExercise(JSON.parse(req.body));
+      const data = JSON.parse(req.body);
       try {
         const routine = await Routine.create(data);
         return res.status(200).json({ type: 'success', payload: routine });

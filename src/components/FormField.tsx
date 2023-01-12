@@ -1,15 +1,17 @@
 import React from "react";
 
-export const FormField = ({ field }: FormFieldProps) => {
+export const FormField = ({ field, subField }: FormFieldProps) => {
   const Tag = field.inputTag;
-  console.log(field);
+
+  const name = subField ? `${subField}.${field.name}` : field.name;
+  const id = subField ? `${subField}.${field.id}` : field.id;
 
   if (Tag === "select") {
     return (
       <div>
-        <label htmlFor={field.name}>{field.label}</label>
-        <select>
-          {field?.options?.map((opt) => (
+        <label htmlFor={name}>{field.label}</label>
+        <select id={id} name={name}>
+          {field?.options?.map((opt: any) => (
             <option key={opt._id} value={opt._id}>
               {opt.name}
             </option>
@@ -21,10 +23,12 @@ export const FormField = ({ field }: FormFieldProps) => {
 
   return (
     <div>
-      <label htmlFor={field.name}>{field.label}</label>
+      <label htmlFor={name}>{field.label}</label>
       <Tag
         type={field.input}
         required={field.required}
+        id={id}
+        name={name}
         defaultValue={field.defaultValue}
       />
     </div>
@@ -32,7 +36,8 @@ export const FormField = ({ field }: FormFieldProps) => {
 };
 
 interface FormFieldProps {
-  field: FormFieldInterface;
+  field: FormFieldInterface | any;
+  subField?: string | number;
 }
 
 interface FormFieldInterface {

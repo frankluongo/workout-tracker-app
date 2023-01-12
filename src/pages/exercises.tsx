@@ -1,42 +1,34 @@
-import React, { useState } from "react";
-import { AddExercise } from "#components/AddExercise";
-import { Modal } from "#components/Modal";
-
+import React from "react";
 import { ExerciseSchemaInterface } from "#models/Exercise";
 
-import { useAppMachine } from "#hooks/useAppMachine";
+import { ExerciseCreate } from "#components/ExerciseCreate";
+import { ExerciseDelete } from "#components/ExerciseDelete";
+import { fetchExercises } from "#lib/exercises";
 
-export default function Exercises() {
-  const { currentState, state } = useAppMachine();
-  const [showModal, setShow] = useState(false);
-  const results = state.context.exercises || [];
+export default function Exercises({ exercises }: ExercisesPageProps) {
+  const results = JSON.parse(exercises);
 
   return (
     <>
       <header>
         <h2 className="h2">Exercises</h2>
-        <button onClick={() => setShow(true)} type="button">
+        <ExerciseCreate
+          formSubmitText="Add Exercise"
+          modalTitle="Create New Exercise"
+        >
           Add Exercise
-        </button>
+        </ExerciseCreate>
       </header>
       <section className="exercise-list">
         {results.map((exercise: any) => (
           <Exercise exercise={exercise} key={exercise._id} />
         ))}
       </section>
-      {showModal && (
-        <Modal showModal={showModal} setShow={setShow} title="Add Exercise">
-          <AddExercise type="ADD_EXERCISE" exercise={null} />
-        </Modal>
-      )}
     </>
   );
 }
 
 function Exercise({ exercise }: { exercise: ExerciseSchemaInterface }) {
-  const { send } = useAppMachine();
-  const [showModal, setShow] = useState(false);
-
   return (
     <>
       <article
@@ -60,30 +52,27 @@ function Exercise({ exercise }: { exercise: ExerciseSchemaInterface }) {
           </section>
         </div>
         <div>
-          <button
-            disabled={exercise.archived}
-            className="button:default"
-            onClick={() => setShow(true)}
+          <ExerciseCreate
+            exercise={exercise}
+            formSubmitText="Edit Exercise"
+            method="PATCH"
+            modalTitle="Edit Exercise"
           >
-            Edit
-          </button>
-          {!exercise.archived && (
-            <button
-              onClick={() =>
-                send({ type: "DELETE_EXERCISE", id: exercise._id })
-              }
-              className="button:default"
-            >
-              Delete
-            </button>
-          )}
+            Edit Exercise
+          </ExerciseCreate>
+          {!exercise.archived && <ExerciseDelete id={exercise._id} />}
         </div>
       </article>
-      {showModal && (
-        <Modal showModal={showModal} setShow={setShow} title="Update Exercise">
-          <AddExercise type="UPDATE_EXERCISE" exercise={exercise} />
-        </Modal>
-      )}
     </>
   );
+}
+
+interface ExercisesPageProps {
+  exercises: string;
+}
+
+export async function getServerSideProps() {
+  const exercises = await fetchExercises();
+  console.log(exercises);
+  return { props: { exercises } };
 }

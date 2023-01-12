@@ -12,35 +12,40 @@ export const APP_STATES = {
   workingOut: 'workingOut'
 };
 
-export const EQUIPMENT: Array<{ label: string, slug: string}> = [
-  { label: 'Bands', slug: "bands" },
-  { label: 'Barbell', slug: "barbell" },
-  { label: 'Bodyweight', slug: "bodyweight" },
-  { label: 'Cable Machine', slug: "cable-machine" },
-  { label: 'Dumbbells', slug: "dumbbells" },
-  { label: 'Plate-loaded Machine', slug: "plate-loaded-machine" },
+interface OptionObj {
+  _id: string;
+  name: string;
+}
+
+export const EQUIPMENT: Array<OptionObj> = [
+  { name: 'Bands', _id: "Bands" },
+  { name: 'Barbell', _id: "Barbell" },
+  { name: 'Bodyweight', _id: "Bodyweight" },
+  { name: 'Cable Machine', _id: "Cable Machine" },
+  { name: 'Dumbbells', _id: "Dumbbells" },
+  { name: 'Plate-loaded Machine', _id: "Plate-loaded Machine" },
 ]
 
-export const MUSCLE_GROUPS: Array<{ label: string, slug: string}> = [
-  { label: "Biceps", slug: "biceps" },
-  { label: "Calves", slug: "calves" },
-  { label: "Chest", slug: "chest" },
-  { label: "Core", slug: "core" },
-  { label: "Glutes", slug: "glutes" },
-  { label: "Hamstrings", slug: "hamstrings" },
-  { label: "Lower Back", slug: "lower-back" },
-  { label: "Quads", slug: "quads" },
-  { label: "Shoulders", slug: "shoulders" },
-  { label: "Triceps", slug: "triceps" },
-  { label: "Upper Back", slug: "upper-back" }
+export const MUSCLE_GROUPS: Array<OptionObj> = [
+  { name: "Biceps", _id: "Biceps" },
+  { name: "Calves", _id: "Calves" },
+  { name: "Chest", _id: "Chest" },
+  { name: "Core", _id: "Core" },
+  { name: "Glutes", _id: "Glutes" },
+  { name: "Hamstrings", _id: "Hamstrings" },
+  { name: "Lower Back", _id: "Lower Back" },
+  { name: "Quads", _id: "Quads" },
+  { name: "Shoulders", _id: "Shoulders" },
+  { name: "Triceps", _id: "Triceps" },
+  { name: "Upper Back", _id: "Upper Back" }
 ]
 
 export const NAVIGATION = [
-  { label: "Routines", to: "/routines" },
-  { label: "Exercises", to: "/exercises" },
-  { label: "Home", to: "/" },
-  { label: "Stats", to: "/stats" },
-  { label: "Settings", to: "/settings" },
+  { name: "Routines", to: "/routines" },
+  { name: "Exercises", to: "/exercises" },
+  { name: "Home", to: "/" },
+  { name: "Stats", to: "/stats" },
+  { name: "Settings", to: "/settings" },
 ];
 
 export const SET_TYPES = {

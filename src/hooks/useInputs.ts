@@ -11,8 +11,8 @@ export function useInputs(obj: object): UserInputsReturn {
 }
 
 interface ActionInterface {
-  type: string,
-  value: string|number
+  type: string;
+  value: string|number|null;
 }
 
 interface UserInputsReturn {

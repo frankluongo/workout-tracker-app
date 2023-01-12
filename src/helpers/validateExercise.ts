@@ -1,15 +1,7 @@
-// Boolean (true/false) fields:
-const booleanFields = ['archived', 'timed', 'unilateral'];
 // Number fields
 const numberFields = ['baseWeight', 'oneRepMax'];
 
 export function validateExercise(obj: any) {
-  // These fields will come through as "on" if checked,
-  // so we need to set them to "true" instead:
-  booleanFields.forEach((prop) => {
-    obj[prop] = !!obj[prop];
-  });
-
   // These fields will come through as strings,
   // so lets make them integers:
   numberFields.forEach((prop) => {

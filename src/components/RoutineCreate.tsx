@@ -3,17 +3,11 @@ import React, { useState } from "react";
 import { Modal } from "./Modal";
 import { RoutineForm } from "./RoutineForm";
 
-export const CreateRoutine = ({
-  exercises,
-  routine,
-}: {
-  exercises: Array<any>;
-  routine?: RoutineInterface | null;
-}) => {
+export const RoutineCreate = ({ exercises, routine }: RoutineCreateProps) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModal(true)}>CreateRoutine</button>
+      <button onClick={() => setShowModal(true)}>Create Routine</button>
       {showModal && (
         <Modal setShow={setShowModal} title="Add Routine">
           <RoutineForm routine={routine} exercises={exercises} />
@@ -22,3 +16,8 @@ export const CreateRoutine = ({
     </>
   );
 };
+
+interface RoutineCreateProps {
+  exercises: Array<any>;
+  routine?: RoutineInterface | null;
+}

@@ -8,7 +8,7 @@ export const Menu = () => {
       <nav className="menu">
         {NAVIGATION.map((el: any) => (
           <Link key={el.to} href={el.to} className="menu-link">
-            {el.label}
+            {el.name}
           </Link>
         ))}
       </nav>
