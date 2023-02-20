@@ -1,16 +1,27 @@
 import React from "react";
 
-import { RoutineCreate } from "#components/RoutineCreate";
-import { fetchExercises } from "#lib/exercises";
-import { fetchRoutines } from "#lib/routines";
+import { fetchExercises } from "#backend/lib/exercises";
+import { fetchRoutines } from "#backend/lib/routines";
+import { Creator } from "#base/Creator/Creator";
+import { RoutineForm } from "#features/RoutineForm";
+import { PageHeader } from "#base/PageHeader/PageHeader";
 
-export default function Routine({ exercises, routines }: RoutinePageProps) {
+export default function RoutinesPage({
+  exercises,
+  routines,
+}: RoutinePageProps) {
   const exercisesArr = JSON.parse(exercises);
   return (
-    <header>
-      <h2 className="h2">Routines</h2>
-      <RoutineCreate exercises={exercisesArr} />
-    </header>
+    <>
+      <PageHeader title="Routines">
+        <Creator
+          createText="Create new routine"
+          FormComponent={RoutineForm}
+          exercises={exercisesArr}
+          title="Create new routine"
+        />
+      </PageHeader>
+    </>
   );
 }
 

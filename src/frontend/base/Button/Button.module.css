@@ -1,0 +1,36 @@
+.Button {
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  appearance: none;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.Button[data-button*="small"] {
+  padding: 0.5rem 0.75rem;
+
+  font-size: 14px;
+}
+
+.Button[data-button*="outline"] {
+  color: var(--c1);
+
+  background: var(--g12);
+  border: 1px solid var(--c1);
+}
+
+.Button[data-button*="save"] {
+  color: var(--g12);
+
+  background: var(--gr3);
+  border: 1px solid var(--c3);
+}
+
+.Button[data-button*="delete"] {
+  color: var(--g12);
+
+  background: var(--gr2);
+  border: 1px solid var(--c4);
+}

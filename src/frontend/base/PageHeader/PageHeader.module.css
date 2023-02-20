@@ -1,0 +1,17 @@
+.PageHeader {
+  --padding: 1rem;
+
+  color: var(--color-white, white);
+
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: var(--padding);
+}
+
+@media (min-width: 900px) {
+  .PageHeader {
+    --padding: 2rem;
+  }
+}

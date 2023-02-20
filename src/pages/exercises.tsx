@@ -1,78 +1,38 @@
-import React from "react";
-import { ExerciseSchemaInterface } from "#models/Exercise";
+import React, { useState } from "react";
 
-import { ExerciseCreate } from "#components/ExerciseCreate";
-import { ExerciseDelete } from "#components/ExerciseDelete";
-import { fetchExercises } from "#lib/exercises";
+import { Exercise } from "#frontend/features/Exercise";
+import { fetchExercises } from "#backend/lib/exercises";
+import { Content } from "#base/Content/Content";
+import { PageHeader } from "#base/PageHeader/PageHeader";
+import { Creator } from "#base/Creator/Creator";
+import { ExerciseForm } from "#features/ExerciseForm";
 
-export default function Exercises({ exercises }: ExercisesPageProps) {
-  const results = JSON.parse(exercises);
+export default function ExercisesPage({ exercisesJson }: ExercisesPageProps) {
+  const [exercises, setExercises] = useState(JSON.parse(exercisesJson));
 
   return (
     <>
-      <header>
-        <h2 className="h2">Exercises</h2>
-        <ExerciseCreate
-          formSubmitText="Add Exercise"
-          modalTitle="Create New Exercise"
-        >
-          Add Exercise
-        </ExerciseCreate>
-      </header>
-      <section className="exercise-list">
-        {results.map((exercise: any) => (
+      <PageHeader title="Exercises">
+        <Creator
+          createText="Create new exercise"
+          FormComponent={ExerciseForm}
+          title="Create new exercise"
+        />
+      </PageHeader>
+      <Content>
+        {exercises.map((exercise: any) => (
           <Exercise exercise={exercise} key={exercise._id} />
         ))}
-      </section>
-    </>
-  );
-}
-
-function Exercise({ exercise }: { exercise: ExerciseSchemaInterface }) {
-  return (
-    <>
-      <article
-        className="exercise-list-item row"
-        data-archived={exercise.archived}
-      >
-        <div className="column block-gap">
-          <header className="block-gap:8px">
-            <h3>{exercise.name}</h3>
-            {exercise.notes && <p>{exercise.notes}</p>}
-          </header>
-          <section className="exercise-list-item-details">
-            <div>
-              <strong>Equipment:&nbsp;</strong>
-              {exercise.equipment}
-            </div>
-            <div>
-              <strong>Muscle Group:&nbsp;</strong>
-              {exercise.muscleGroup}
-            </div>
-          </section>
-        </div>
-        <div>
-          <ExerciseCreate
-            exercise={exercise}
-            formSubmitText="Edit Exercise"
-            method="PATCH"
-            modalTitle="Edit Exercise"
-          >
-            Edit Exercise
-          </ExerciseCreate>
-          {!exercise.archived && <ExerciseDelete id={exercise._id} />}
-        </div>
-      </article>
+      </Content>
     </>
   );
 }
 
 interface ExercisesPageProps {
-  exercises: string;
+  exercisesJson: string;
 }
 
 export async function getServerSideProps() {
-  const exercises = await fetchExercises();
-  console.log(exercises);
-  return { props: { exercises } };
+  const exercisesJson = await fetchExercises();
+  return { props: { exercisesJson } };
 }

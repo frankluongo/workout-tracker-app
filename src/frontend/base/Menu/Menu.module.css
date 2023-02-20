@@ -1,0 +1,36 @@
+.Header {
+  height: 100vh;
+
+  background: var(--gr4);
+}
+
+.Menu {
+  display: flex;
+  width: 100%;
+}
+
+.MenuLink {
+  padding: 32px;
+
+  color: var(--g12);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-align: left;
+
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out;
+}
+
+.MenuLink[aria-current="true"] {
+  background-color: #f8f8f8;
+}
+
+@media (min-width: 900px) {
+  .Menu {
+    flex-direction: column;
+  }
+}

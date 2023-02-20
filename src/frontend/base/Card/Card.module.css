@@ -1,0 +1,21 @@
+.Card {
+  --bg: var(--gr1);
+  --border: var(--g8);
+  --color: var(--g12);
+  --padding: 1rem;
+
+  color: var(--color);
+
+  padding: var(--padding);
+
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+}
+
+.Card[data-type="dark"] {
+  --bg: var(--gr6);
+  --border: var(--g5);
+  --color: var(--g12);
+  --padding: 2rem;
+}
